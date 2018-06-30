@@ -11,13 +11,19 @@
 	http://www.springframework.org/schema/integration/file
 	https://www.springframework.org/integration/file/spring-integration-file.xsd">
 
-	<int-stream:stdin-channel-adapter id="producer"
-		channel="messageChannel" />
+	<!--<int-stream:stdin-channel-adapter id="producer"-->
+		<!--channel="messageChannel" />-->
+	<int-file:inbound-channel-adapter id="producer-file-adapter"
+									  channel="messageChannel" directory="file:c://inbound"
+									  prevent-duplicates="true">
+		<int:poller fixed-rate="5000" />
+	</int-file:inbound-channel-adapter>
 
-<!--
-	<int-stream:stdout-channel-adapter
-		id="consumer" channel="messageChannel" append-newline="true" />
--->
+
+	<!--
+        <int-stream:stdout-channel-adapter
+            id="consumer" channel="messageChannel" append-newline="true" />
+    -->
 	<int-file:outbound-channel-adapter channel="messageChannel"
 									   id="consumer-file-adapter" directory="file:c://outbound" />
 
