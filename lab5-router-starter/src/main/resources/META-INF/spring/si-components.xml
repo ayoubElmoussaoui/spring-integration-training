@@ -34,14 +34,27 @@
 		<int-xml:mapping value="USA" channel="usaChannel" />
 	</int-xml:xpath-router>
 
-
 	<int:channel id="norwayChannel" />
 	<int:channel id="usaChannel" />
 
-	<int-file:outbound-channel-adapter channel="norwayChannel"
+	<int:recipient-list-router input-channel="norwayChannel">
+		<int:recipient channel="norwayFileChannel" />
+		<int:recipient channel="norwaySAChannel" />
+	</int:recipient-list-router>
+
+	<int:channel id="norwayFileChannel" />
+	<int:channel id="norwaySAChannel" />
+
+	<int-file:outbound-channel-adapter channel="norwayFileChannel"
 									   id="consumer-file-adapter1" directory="file:c://outboundNorway" />
+
+	<int:service-activator id="printing-service-activator"
+						   input-channel="norwaySAChannel" ref="serviceActivator" />
+	<bean id="serviceActivator"
+		  class="com.intertech.lab5.ExampleServiceActivator" />
 	<int-file:outbound-channel-adapter channel="usaChannel"
-									   id="consumer-file-adapter2" directory="file:c://outboundUsa" />
+	id="consumer-file-adapter2" directory="file:c://outboundUsa" />
+
 
 </beans>
 
