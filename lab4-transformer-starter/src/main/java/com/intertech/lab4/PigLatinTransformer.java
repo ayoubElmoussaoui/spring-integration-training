@@ -2,11 +2,16 @@ package com.intertech.lab4;
 
 import java.util.Scanner;
 
+import org.springframework.integration.annotation.Transformer;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
+import org.springframework.stereotype.Component;
 
+
+@Component
 public class PigLatinTransformer {
 
+	@Transformer
 	public Message<String> toPigLatin(Message<String> inString) {
 		String word;
 		String latin = "";

@@ -17,10 +17,13 @@
 	<int-stream:stdin-channel-adapter id="producer-stream-adapter"
 		channel="inboundChannel" />
 
-	<int:channel id="inboundChannel" />
+<!--	<int:channel id="inboundChannel" />
 	<int:transformer input-channel="inboundChannel"
 					 output-channel="outboundChannel"
-					 expression="new StringBuilder(payload).reverse().toString().toUpperCase()" />
+					 expression="new StringBuilder(payload).reverse().toString().toUpperCase()" />-->
+	<int:transformer input-channel="inboundChannel"
+					 output-channel="outboundChannel" ref="pigLatinTransformer" />
+
 
 	<int:channel id="outboundChannel" />
 
