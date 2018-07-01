@@ -2,9 +2,14 @@ package com.intertech.lab8;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+
 public class Startup {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException, ExecutionException, TimeoutException {
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
 				"/META-INF/spring/si-components.xml");
 //
@@ -13,8 +18,11 @@ public class Startup {
 //		channel.send(message);
 		PigLatinService service = context.getBean("latinService",
 				PigLatinService.class);
-		System.out.println(service.translate("Hello brave new world"));
-		
+		Future<String> future = service.translate("Hello brave new world");
+// do more work here in a real application
+		String serviceOutput = future.get(5000, TimeUnit.SECONDS);
+		System.out.println(serviceOutput);
+
 		context.close();
 	}
 }
