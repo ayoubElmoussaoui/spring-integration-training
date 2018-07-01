@@ -28,14 +28,18 @@
 
 
 	<int:channel id="xml-inboundChannel" />
-
+<!--
 	<int-xml:xpath-expression id="filterXpathExp"
 							  expression="//country='USA'"></int-xml:xpath-expression>
 	<int-xml:xpath-filter id="xpathFilter"
 						  input-channel="xml-inboundChannel" match-type="exact"
 						  output-channel="outboundChannel"
 						  xpath-expression-ref="filterXpathExp">
-	</int-xml:xpath-filter>
+	</int-xml:xpath-filter>-->
+	<int-xml:validating-filter id="validation-filter"
+							   input-channel="xml-inboundChannel" output-channel="outboundChannel"
+							   schema-location="META-INF/shiporder.xsd">
+	</int-xml:validating-filter>
 
 
 	<int:channel id="outboundChannel" />
